@@ -1,6 +1,7 @@
 package model;
 
 import exception.ListaVaziaException;
+import exception.ValorExisteException;
 
 public class FilaNo extends ListaNo {
 
@@ -24,6 +25,9 @@ public class FilaNo extends ListaNo {
     }
 
     public void inserirNoFim(Integer valor) {
+        if (exists(valor)){
+            throw new ValorExisteException("Esse valor já existe dentro da fila");
+        }
         if (estaVazio()) {
             No no = new No(valor);
             this.setInicio(no);
@@ -36,7 +40,7 @@ public class FilaNo extends ListaNo {
 
     public Integer removerNoInicio() {
         if (estaVazio()) {
-            throw new ListaVaziaException("A lista está vazia");
+            throw new ListaVaziaException("A fila está vazia");
         }
         No valorRetorno = getInicio();
         if (getInicio().equals(getUltimo())) {
@@ -60,7 +64,7 @@ public class FilaNo extends ListaNo {
             System.out.printf("Valor: %d \n", auxiliar.getValor());
             auxiliar = auxiliar.getProximo();
         }
-        System.out.printf("A lista tem %d de tamanho \n", getTamanhoLista());
+        System.out.printf("A fila tem %d de tamanho \n", getTamanhoLista());
     }
 
     public Boolean exists(Integer valor) {
