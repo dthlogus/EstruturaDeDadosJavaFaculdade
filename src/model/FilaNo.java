@@ -25,15 +25,13 @@ public class FilaNo extends ListaNo {
     }
 
     public void inserirNoFim(Integer valor) {
-        if (exists(valor)){
-            throw new ValorExisteException("Esse valor já existe dentro da fila");
-        }
         if (estaVazio()) {
             No no = new No(valor);
-            this.setInicio(no);
-            this.setUltimo(no);
+            setUltimo(no);
+            setInicio(getUltimo());
         } else {
-            this.setInicio(new No(valor, this.getInicio()));
+            getUltimo().setProximo(new No(valor));
+            setUltimo(getUltimo().getProximo());
         }
         this.setTamanhoLista(this.getTamanhoLista() + 1);
     }
@@ -60,11 +58,17 @@ public class FilaNo extends ListaNo {
         }
 
         No auxiliar = getInicio();
+        if (getTamanhoLista().equals(1)){
+            System.out.printf("Valor: %d ", auxiliar.getValor());
+            System.out.printf("\nA fila tem %d de tamanho \n\n", getTamanhoLista());
+            return;
+        }
+
         while (auxiliar != null) {
-            System.out.printf("Valor: %d \n", auxiliar.getValor());
+            System.out.printf(" <- Valor: %d", auxiliar.getValor());
             auxiliar = auxiliar.getProximo();
         }
-        System.out.printf("A fila tem %d de tamanho \n", getTamanhoLista());
+        System.out.printf("\nA fila tem %d de tamanho \n\n", getTamanhoLista());
     }
 
     public Boolean exists(Integer valor) {
